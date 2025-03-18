@@ -25,7 +25,8 @@ const ReviewSlideshow = () => {
   const nextSlide = () => setCurrentReview((prev) => (prev + 1) % reviews.length);
 
   return (
-    <div className="mt-16 relative flex items-center justify-center w-full h-80">
+
+    <div className="mt-9 relative flex items-center justify-center w-full h-80">
       {/* Left Button */}
       <button
         className="absolute left-0 z-10 p-2 bg-white bg-opacity-20 backdrop-blur-lg shadow-lg rounded-full"
