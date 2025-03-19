@@ -1,51 +1,37 @@
 import { useState } from "react";
+import axios from "axios";
 
 const ChatComponent = () => {
-    const [meetingId, setMeetingId] = useState("");
-    const [name, setName] = useState("");
-    const [userType, setUserType] = useState("normal");
+    const [inputText, setInputText] = useState("");
+    const [outputText, setOutputText] = useState("");
+    
+    const handleSignProcess = async () => {
+        const { data } = await axios.post("http://localhost:5000/api/sign/process", { inputText });
+        setOutputText(data.correctedText);
+    };
 
-    const createJoinMeeting = async () => {
-        const res = await fetch("http://localhost:5000/api/meetings/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ meetingId, name, userType }),
-        });
-
-        const data = await res.json();
-        console.log(data);
+    const handleSpeechProcess = async () => {
+        const { data } = await axios.post("http://localhost:5000/api/speech/process");
+        setOutputText(data.processedWords);
     };
 
     return (
-        <div className="flex flex-col items-center p-5">
-            <input
-                type="text"
-                className="border p-2 rounded-lg"
-                value={meetingId}
-                onChange={(e) => setMeetingId(e.target.value)}
-                placeholder="Enter Meeting ID"
-            />
-            <input
-                type="text"
-                className="border p-2 rounded-lg mt-2"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter Your Name"
-            />
-            <select
-                className="border p-2 rounded-lg mt-2"
-                value={userType}
-                onChange={(e) => setUserType(e.target.value)}
-            >
-                <option value="normal">Normal</option>
-                <option value="deaf">Deaf</option>
-            </select>
-            <button
-                className="bg-blue-500 text-white px-4 py-2 mt-3 rounded-lg"
-                onClick={createJoinMeeting}
-            >
-                Join/Create Meeting
-            </button>
+        <div className="p-6 bg-gray-100 text-center">
+            <h1 className="text-2xl font-bold mb-4">Deaf-Normal Communication</h1>
+
+            <textarea 
+                className="w-full p-2 border rounded mb-4"
+                placeholder="Enter sign language text..."
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+            ></textarea>
+
+            <div className="flex justify-center space-x-4">
+                <button onClick={handleSignProcess} className="bg-blue-500 text-white px-4 py-2 rounded">Capture Sign</button>
+                <button onClick={handleSpeechProcess} className="bg-green-500 text-white px-4 py-2 rounded">Record Message</button>
+            </div>
+
+            {outputText && <p className="mt-4 text-lg font-semibold">{outputText}</p>}
         </div>
     );
 };
