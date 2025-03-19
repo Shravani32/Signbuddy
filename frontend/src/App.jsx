@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Recording from "./components/Recording";
+import ChatComponent from "./components/ChatComponent";
 
 
 const App = () => {
@@ -15,6 +16,9 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path='/recording' element={<Recording/>} />
+
+        <Route path="/chat" element={<ChatComponent />} />
+
       </Routes>
     </>
   );

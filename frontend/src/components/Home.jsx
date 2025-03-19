@@ -94,8 +94,8 @@ const Home = () => {
       </FadeInSection>
 
       {/* FAQ & Reviews */}
-      <FAQSection />
       <ReviewSlideshow />
+      <FAQSection />
 
       {/* Footer */}
       <footer className="w-full bg-gray-800 text-white text-center py-6 mt-12">
