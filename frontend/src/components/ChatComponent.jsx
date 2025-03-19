@@ -4,15 +4,34 @@ import axios from "axios";
 const ChatComponent = () => {
     const [inputText, setInputText] = useState("");
     const [outputText, setOutputText] = useState("");
-    
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
     const handleSignProcess = async () => {
-        const { data } = await axios.post("http://localhost:5000/api/sign/process", { inputText });
-        setOutputText(data.correctedText);
+        try {
+            setLoading(true);
+            setError("");
+            const { data } = await axios.post("http://localhost:5000/api/sign/process", { inputText });
+            console.log(data.correctedText);
+            setOutputText(`Processed Sign: ${data.correctedText}`);
+        } catch (err) {
+            setError("Error processing sign language");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleSpeechProcess = async () => {
-        const { data } = await axios.post("http://localhost:5000/api/speech/process");
-        setOutputText(data.processedWords);
+        try {
+            setLoading(true);
+            setError("");
+            const { data } = await axios.post("http://localhost:5000/api/speech/process");
+            setOutputText(`Processed Speech: ${data.processedWords}`);
+        } catch (err) {
+            setError("Error processing speech");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -27,10 +46,24 @@ const ChatComponent = () => {
             ></textarea>
 
             <div className="flex justify-center space-x-4">
-                <button onClick={handleSignProcess} className="bg-blue-500 text-white px-4 py-2 rounded">Capture Sign</button>
-                <button onClick={handleSpeechProcess} className="bg-green-500 text-white px-4 py-2 rounded">Record Message</button>
+                <button 
+                    onClick={handleSignProcess} 
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    disabled={loading}
+                >
+                    {loading ? "Processing..." : "Capture Sign"}
+                </button>
+                <button 
+                    onClick={handleSpeechProcess} 
+                    className="bg-green-500 text-white px-4 py-2 rounded"
+                    disabled={loading}
+                >
+                    {loading ? "Processing..." : "Record Message"}
+                </button>
             </div>
 
+            {loading && <p className="mt-4 text-lg text-blue-500">Processing...</p>}
+            {error && <p className="mt-4 text-lg text-red-500">{error}</p>}
             {outputText && <p className="mt-4 text-lg font-semibold">{outputText}</p>}
         </div>
     );
