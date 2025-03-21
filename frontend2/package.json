@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD:frontend2/package.json
     "@emailjs/browser": "^4.4.1",
+=======
+    "axios": "^1.8.3",
+>>>>>>> 23a8d0027cc4314eb89c22d1eadfd508ff8cbb35:frontend/package.json
     "framer-motion": "^12.5.0",
     "frontend": "file:",
     "lucide-react": "^0.482.0",

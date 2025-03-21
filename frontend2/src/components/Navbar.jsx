@@ -51,6 +51,21 @@ const Navbar = () => {
               Contact Us
             </NavLink>
           </li>
+          
+          <li>
+            <NavLink
+              to="/chat"
+              className={({ isActive }) =>
+                `text-white text-lg font-semibold px-4 py-2 transition-all duration-300 rounded-lg ${
+                  isActive ? "bg-yellow-400 text-gray-900 shadow-md" : "hover:bg-white hover:bg-opacity-20"
+                }`
+              }
+            >
+              CHat
+            </NavLink>
+          </li>
+
+
         </ul>
       </div>
     </nav>
