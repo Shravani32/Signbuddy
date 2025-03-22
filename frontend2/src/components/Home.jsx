@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useInView } from "framer-motion";
 import FAQSection from "./FAQSection";
 import ReviewSlideshow from "./ReviewSlideShow";
+import HelpButton from "./HelpButton";
 
 const FadeInSection = ({ children }) => {
   const ref = useRef(null);
@@ -59,7 +60,7 @@ const Home = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate("/recording")}
+            onClick={() => navigate("/langDetection")}
             className="bg-yellow-400 text-gray-900 font-semibold text-lg px-8 py-3 rounded-full shadow-lg transition duration-300 hover:bg-yellow-500"
           >
             Get Started
@@ -106,6 +107,8 @@ const Home = () => {
           <ReviewSlideshow />
         </section>
       </FadeInSection>
+
+      <HelpButton/>
 
       {/* FAQ & Footer */}
       <FAQSection />
